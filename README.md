@@ -1,4 +1,5 @@
 Amanat 🛡️
+
 Emergency Financial Intelligence Protocol
 Amanat is a financial visibility protocol designed to help families access critical financial asset information during emergencies.
 In many households, the primary earner manages financial accounts across multiple institutions. During medical crises or unexpected events, families often struggle to locate bank accounts, investments, or insurance policies quickly, causing delays in treatment and financial stress.

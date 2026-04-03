@@ -1,0 +1,346 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════
+   AMANAT — Premium FinTech Design System
+   Inspired by CRED, Fi, Apple Wallet
+   ═══════════════════════════════════════════════════════════════ */
+
+@theme {
+  --color-bg-pure: #000000;
+  --color-bg-primary: #09090b;  /* Deep OLED black */
+  --color-bg-secondary: #121214;
+  --color-bg-card: #18181b;
+  --color-bg-card-hover: #27272a;
+  --color-bg-elevated: #27272a;
+
+  --color-border-default: #27272a;
+  --color-border-subtle: #18181b;
+  --color-border-accent: #3b82f6; /* Trust blue */
+
+  --color-accent-primary: #2563eb; 
+  --color-accent-secondary: #3b82f6;
+  --color-accent-glow: #2563eb40;
+
+  --color-success: #10b981;
+  --color-success-soft: #10b98115;
+  --color-danger: #ef4444;
+  --color-danger-soft: #ef444415;
+  --color-warning: #f59e0b;
+  --color-warning-soft: #f59e0b15;
+
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a1a1aa;
+  --color-text-muted: #71717a;
+
+  --font-family-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+  --animate-fade-in: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-up: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-pulse-glow: pulseGlow 3s ease-in-out infinite;
+  --animate-scan: scanLine 2s linear infinite;
+  --animate-shimmer: shimmer 2s linear infinite;
+  --animate-swipe: swipeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Base Styles
+   ═══════════════════════════════════════════════════════════════ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: var(--font-family-sans);
+  background: #f4f4f5; /* Desktop background, contrasted with phone */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center device vertically on desktop */
+  padding: 24px 0;
+}
+
+::-webkit-scrollbar {
+  width: 0px; /* Hide scrollbar for realistic app feel */
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Device Framing (Desktop -> Phone Illusion)
+   ═══════════════════════════════════════════════════════════════ */
+
+.device-frame {
+  width: 390px;
+  height: 844px; /* iPhone 13/14 Pro dimensions */
+  background: var(--color-bg-primary);
+  border-radius: 48px; /* Hardware corner radius */
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 0 0 12px #27272a, /* phone bezel */
+    0 0 0 14px #3f3f46, /* phone casing edge */
+    0 25px 50px -12px rgba(0, 0, 0, 0.5), /* massive drop shadow */
+    0 40px 80px rgba(0, 0, 0, 0.2); 
+}
+
+@media (max-width: 440px) {
+  /* On actual mobile, remove the fake bezel */
+  .device-frame {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+.fake-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 32px;
+  background: #27272a;
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+  z-index: 100;
+}
+
+@media (max-width: 440px) {
+  .fake-notch { display: none; }
+}
+
+.app-screen {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-top: 48px; /* Safe area top */
+  padding-bottom: 88px; /* Safe area bottom */
+  color: var(--color-text-primary);
+  position: relative;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Premium Glass & Cards
+   ═══════════════════════════════════════════════════════════════ */
+
+.glass-card {
+  background: rgba(24, 24, 27, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08); /* Sophisticated subtle border */
+  border-radius: 20px;
+  box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.4);
+}
+
+.glass-card-glow {
+  background: rgba(24, 24, 27, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--color-accent-primary);
+  border-radius: 20px;
+  box-shadow: inset 0 0 20px rgba(37, 99, 235, 0.1), 0 8px 32px rgba(37, 99, 235, 0.15);
+}
+
+/* For extreme alerts */
+.glass-card-danger {
+  background: rgba(24, 24, 27, 0.85);
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--color-danger);
+  border-radius: 20px;
+  box-shadow: inset 0 0 20px rgba(239, 68, 68, 0.1), 0 8px 32px rgba(239, 68, 68, 0.15);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Typography & Gradients
+   ═══════════════════════════════════════════════════════════════ */
+
+.gradient-text {
+  background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-blue-text {
+  background: linear-gradient(135deg, var(--color-accent-secondary), #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.premium-gradient-bg {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.2) 0%, rgba(9, 9, 11, 0) 100%);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Camera Viewport
+   ═══════════════════════════════════════════════════════════════ */
+
+.camera-circle {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid var(--color-accent-primary);
+  position: relative;
+  box-shadow: 0 0 40px var(--color-accent-glow), inset 0 0 20px rgba(0,0,0,0.5);
+  background: #000;
+}
+
+.camera-circle video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+}
+
+.camera-scan-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.camera-scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #60a5fa, transparent);
+  animation: scanLine 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  box-shadow: 0 0 15px #60a5fa;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Signature Canvas
+   ═══════════════════════════════════════════════════════════════ */
+.signature-canvas-wrapper {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px dashed rgba(255,255,255,0.15);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.signature-canvas-wrapper canvas {
+  width: 100% !important;
+  height: 180px !important;
+  cursor: crosshair;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Bottom Navigation Dock (Floating)
+   ═══════════════════════════════════════════════════════════════ */
+
+.bottom-dock {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  background: rgba(24, 24, 27, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  padding: 6px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 50;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.dock-item {
+  display: flex;
+  flex-direction: column;
+  items: center;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 0;
+  width: 30%;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+  background: transparent;
+  border: none;
+}
+
+.dock-item:active {
+  transform: scale(0.92);
+}
+
+.dock-item.active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08); /* Subtle highlight */
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Keyframes
+   ═══════════════════════════════════════════════════════════════ */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes swipeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px var(--color-accent-glow); }
+  50% { box-shadow: 0 0 50px rgba(37, 99, 235, 0.6); }
+}
+
+@keyframes scanLine {
+  0% { transform: translateY(-100px); }
+  50% { transform: translateY(240px); }
+  100% { transform: translateY(-100px); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Step Indicator redefined for premium look */
+.step-indicator {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+.step-dot {
+  width: 32px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.1);
+  transition: all 0.4s ease;
+}
+.step-dot.active {
+  background: var(--color-accent-primary);
+  box-shadow: 0 0 8px var(--color-accent-primary);
+}
+.step-dot.completed {
+  background: var(--color-success);
+}
